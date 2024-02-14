@@ -1,5 +1,5 @@
 # ATB-Test
- Test Enviroment for LibGDX Projects
+### Test Enviroment for LibGDX Projects
  
 Setting up the Project:
 To set up the Project execute the build.gradle file.
