@@ -19,7 +19,7 @@ public class GameManager extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(1, 1, 1, 1);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		batch.draw(img, 450, 0);
 		batch.end();
 	}
 	
