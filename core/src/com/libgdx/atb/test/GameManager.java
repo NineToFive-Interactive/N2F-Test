@@ -4,7 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 
 public class GameManager extends ApplicationAdapter {
 
-	BaseGame activeGame = new Homescreen();
+	BaseGame activeGame = new DropletGame();
 
 	@Override
 	public void create () {
