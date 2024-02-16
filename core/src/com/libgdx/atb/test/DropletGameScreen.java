@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -19,7 +20,7 @@ public class DropletGameScreen implements Screen {
 
     final DropletGame game;
     private Texture dropImage;
-    private Texture bucketImage;
+    private Sprite tankImage;
     private Texture mageImage;
     private Texture fireballImage;
     private Sound dropSound;
@@ -33,12 +34,14 @@ public class DropletGameScreen implements Screen {
     private long lastFireballTime;
     private int dropsGathered;
     private int fireballsCaught;
+    private boolean isPaused = true;
 
     public DropletGameScreen(final DropletGame game) {
         this.game = game;
 
         dropImage = new Texture(Gdx.files.internal("droplet.png"));
-        bucketImage = new Texture(Gdx.files.internal("bucket.png"));
+        tankImage = new Sprite(new Texture(Gdx.files.internal("shooter.png")));
+        tankImage.setScale(0.05f);
         mageImage = new Texture(Gdx.files.internal("minimage.png"));
         fireballImage = new Texture(Gdx.files.internal("fireball.png"));
 
@@ -70,6 +73,7 @@ public class DropletGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         camera.update();
@@ -85,8 +89,8 @@ public class DropletGameScreen implements Screen {
         }
         */
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += 200 * Gdx.graphics.getDeltaTime();
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) bucket.x -= 200 * Gdx.graphics.getDeltaTime();
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) bucket.x += 200 * Gdx.graphics.getDeltaTime();
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(new DropletMainMenuScreen(game));
             dispose();
@@ -124,7 +128,7 @@ public class DropletGameScreen implements Screen {
         game.font.draw(game.batch, "Wasser eingefangen: " + dropsGathered, 0, 480);
         game.font.draw(game.batch, "Feuer eingefangen: " + fireballsCaught, 0, 460);
 
-        game.batch.draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
+        game.batch.draw(tankImage, bucket.x, bucket.y, bucket.width, bucket.height);
         game.batch.draw(mageImage, mage.x, mage.y, mage.width, mage.height);
 
         for(Rectangle raindrop: raindrops) {
@@ -135,6 +139,7 @@ public class DropletGameScreen implements Screen {
         }
 
         game.batch.end();
+
     }
 
     @Override
@@ -165,7 +170,7 @@ public class DropletGameScreen implements Screen {
     @Override
     public void dispose() {
         dropImage.dispose();
-        bucketImage.dispose();
+        tankImage.getTexture().dispose();
         mageImage.dispose();
         fireballImage.dispose();
         dropSound.dispose();
