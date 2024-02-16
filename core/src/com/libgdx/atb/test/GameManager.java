@@ -27,7 +27,6 @@ public class GameManager extends ApplicationAdapter {
 
 		ScreenUtils.clear(1, 1, 1, 1);
 		batch.begin();
-
 		batch.draw(img,  windowWidth/2f - imgWidth/2f, windowHeight/2f - imgHeigth/2f);
 		batch.end();
 	}
