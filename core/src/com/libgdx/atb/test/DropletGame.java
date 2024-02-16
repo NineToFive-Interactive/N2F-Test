@@ -18,29 +18,41 @@ import java.util.Iterator;
 public class DropletGame extends BaseGame{
     private Texture dropImage;
     private Texture bucketImage;
+    private Texture mageImage;
+    private Texture fireballImage;
     private Sound dropSound;
     private Music rainMusic;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Rectangle bucket;
+    private Rectangle mage;
+    private Array<Rectangle> fireballs;
     private Array<Rectangle> raindrops;
     private long lastDropTime;
+    private long lastFireballTime;
 
     @Override
     void create() {
+        batch = new SpriteBatch();
+
         dropImage = new Texture(Gdx.files.internal("droplet.png"));
         bucketImage = new Texture(Gdx.files.internal("bucket.png"));
+        mageImage = new Texture(Gdx.files.internal("minimage.png"));
+        fireballImage = new Texture(Gdx.files.internal("fireball.png"));
 
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-
         rainMusic.setLooping(true);
         rainMusic.play();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
-        batch = new SpriteBatch();
+        mage = new Rectangle();
+        mage.width = 64;
+        mage.height = 64;
+        mage.x = (float) 800  - mage.width;
+        mage.y = 20;
 
         bucket = new Rectangle();
         bucket.width = 64;
@@ -51,6 +63,8 @@ public class DropletGame extends BaseGame{
         raindrops = new Array<>();
         spawnRaindrop();
 
+        fireballs = new Array<>();
+        spawnFireball();
     }
 
 
@@ -76,6 +90,7 @@ public class DropletGame extends BaseGame{
         if(bucket.x > 800 - 64) bucket.x = 800 - 64;
 
         if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRaindrop();
+        if(TimeUtils.nanoTime() - lastFireballTime > 5000000000L) spawnFireball();
 
         for (Iterator<Rectangle> iter = raindrops.iterator(); iter.hasNext(); ) {
             Rectangle raindrop = iter.next();
@@ -87,12 +102,21 @@ public class DropletGame extends BaseGame{
             }
         }
 
-
+        for (Iterator<Rectangle> iter = fireballs.iterator(); iter.hasNext(); ) {
+            Rectangle fireball = iter.next();
+            fireball.x -= 400 * Gdx.graphics.getDeltaTime();
+            if(fireball.x < 0) iter.remove();
+            if(fireball.overlaps(bucket)) iter.remove();
+        }
 
         batch.begin();
+        batch.draw(mageImage, mage.x, mage.y);
         batch.draw(bucketImage, bucket.x, bucket.y);
         for(Rectangle raindrop: raindrops) {
             batch.draw(dropImage, raindrop.x, raindrop.y);
+        }
+        for(Rectangle fireball: fireballs) {
+            batch.draw(fireballImage, fireball.x, fireball.y);
         }
         batch.end();
     }
@@ -101,6 +125,8 @@ public class DropletGame extends BaseGame{
     void dispose() {
         dropImage.dispose();
         bucketImage.dispose();
+        mageImage.dispose();
+        fireballImage.dispose();
         dropSound.dispose();
         rainMusic.dispose();
         batch.dispose();
@@ -114,6 +140,16 @@ public class DropletGame extends BaseGame{
         raindrop.height = 64;
         raindrops.add(raindrop);
         lastDropTime = TimeUtils.nanoTime();
+    }
+
+    private void spawnFireball() {
+        Rectangle fireball = new Rectangle();
+        fireball.x = 672;
+        fireball.y = 10;
+        fireball.width = 64;
+        fireball.height = 64;
+        fireballs.add(fireball);
+        lastFireballTime = TimeUtils.nanoTime();
     }
 
 }

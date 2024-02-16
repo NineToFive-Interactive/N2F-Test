@@ -8,7 +8,6 @@ public class DropletGameLauncher extends BaseLauncher{
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Drop");
         config.setWindowedMode(800,480);
-        config.useVsync(true);
         config.setForegroundFPS(60);
         return config;
     }
