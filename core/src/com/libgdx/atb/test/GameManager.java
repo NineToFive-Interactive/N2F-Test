@@ -1,10 +1,11 @@
 package com.libgdx.atb.test;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 
 public class GameManager extends ApplicationAdapter {
 
-	BaseGame activeGame = new DropletGame();
+	Game activeGame = new DropletGame();
 
 	@Override
 	public void create () {
