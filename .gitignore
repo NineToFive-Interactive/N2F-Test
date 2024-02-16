@@ -105,6 +105,9 @@ gradle-app.setting
 .DS_Store
 Thumbs.db
 gradle.properties
+build.gradle
+gradlew
+gradlew.bat
 
 ## iOS
 /ios/xcode/*.xcodeproj/*
