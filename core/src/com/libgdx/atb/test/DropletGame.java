@@ -9,6 +9,7 @@ public class DropletGame extends Game {
     public SpriteBatch batch;
     public BitmapFont font;
 
+
     @Override
     public void create() {
         batch = new SpriteBatch();
