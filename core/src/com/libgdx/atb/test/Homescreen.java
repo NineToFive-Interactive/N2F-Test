@@ -12,7 +12,7 @@ public class Homescreen extends BaseGame{
 
     public void create () {
         batch = new SpriteBatch();
-        img = new Texture("ATM-Studios.jpg");
+        img = new Texture("NINE-TO-FIFE Interactive Logo.png");
     }
 
     public void render () {

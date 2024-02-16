@@ -1,6 +1,5 @@
 package com.libgdx.atb.test;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -50,7 +48,7 @@ public class DropletGame extends BaseGame{
         bucket.x = (float) 800 / 2 - bucket.width / 2;
         bucket.y = 20;
 
-        raindrops = new Array<Rectangle>();
+        raindrops = new Array<>();
         spawnRaindrop();
 
     }
@@ -63,7 +61,7 @@ public class DropletGame extends BaseGame{
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
-        /* Optional to control the bucket with the mouse.
+        /* Optional to control the bucket with the mouse. (Wie Marcel sagen würde: ABSOLUT GIGA BROKEN!!)
         if(Gdx.input.isTouched()) {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
