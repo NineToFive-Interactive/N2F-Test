@@ -5,7 +5,7 @@ import com.badlogic.gdx.Game;
 
 public class GameManager extends ApplicationAdapter {
 
-	Game activeGame = new DropletGame();
+	Game activeGame = new StarfishCollectorGame();
 
 	@Override
 	public void create () {

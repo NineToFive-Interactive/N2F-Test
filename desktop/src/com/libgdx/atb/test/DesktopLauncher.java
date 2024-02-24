@@ -6,7 +6,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		BaseLauncher currentGame = new DropletGameLauncher();
+		BaseLauncher currentGame = new TurtleGameLaucher();
 
 		new Lwjgl3Application(new GameManager(), currentGame.setConfig());
 

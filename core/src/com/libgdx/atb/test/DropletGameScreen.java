@@ -39,14 +39,14 @@ public class DropletGameScreen implements Screen {
     public DropletGameScreen(final DropletGame game) {
         this.game = game;
 
-        dropImage = new Texture(Gdx.files.internal("droplet.png"));
-        tankImage = new Sprite(new Texture(Gdx.files.internal("shooter.png")));
+        dropImage = new Texture(Gdx.files.internal("DropletGame/droplet.png"));
+        tankImage = new Sprite(new Texture(Gdx.files.internal("DropletGame/shooter.png")));
         tankImage.setScale(0.05f);
-        mageImage = new Texture(Gdx.files.internal("minimage.png"));
-        fireballImage = new Texture(Gdx.files.internal("fireball.png"));
+        mageImage = new Texture(Gdx.files.internal("DropletGame/minimage.png"));
+        fireballImage = new Texture(Gdx.files.internal("DropletGame/fireball.png"));
 
-        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+        dropSound = Gdx.audio.newSound(Gdx.files.internal("DropletGame/drop.wav"));
+        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("DropletGame/rain.mp3"));
         rainMusic.setLooping(true);
 
         camera = new OrthographicCamera();
