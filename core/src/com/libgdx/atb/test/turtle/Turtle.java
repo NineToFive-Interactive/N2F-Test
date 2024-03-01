@@ -1,7 +1,8 @@
-package com.libgdx.atb.test;
+package com.libgdx.atb.test.turtle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.libgdx.atb.test.GraphicActor;
 
 public class Turtle extends GraphicActor {
 

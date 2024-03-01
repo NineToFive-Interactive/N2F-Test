@@ -1,4 +1,4 @@
-package com.libgdx.atb.test;
+package com.libgdx.atb.test.gamelaunchers;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 

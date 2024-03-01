@@ -2,6 +2,7 @@ package com.libgdx.atb.test;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
+import com.libgdx.atb.test.turtle.StarfishCollectorGameV2;
 
 public class GameManager extends ApplicationAdapter {
 

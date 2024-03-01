@@ -1,4 +1,4 @@
-package com.libgdx.atb.test;
+package com.libgdx.atb.test.droplet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.libgdx.atb.test.droplet.DropletGame;
+import com.libgdx.atb.test.droplet.DropletGameScreen;
 
 public class DropletMainMenuScreen implements Screen{
 

@@ -1,4 +1,4 @@
-package com.libgdx.atb.test;
+package com.libgdx.atb.test.droplet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

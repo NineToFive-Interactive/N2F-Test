@@ -1,4 +1,4 @@
-package com.libgdx.atb.test;
+package com.libgdx.atb.test.turtle;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
