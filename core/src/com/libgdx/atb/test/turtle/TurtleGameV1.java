@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class StarfishCollectorGame extends Game {
+public class TurtleGameV1 extends Game {
     public SpriteBatch batch;
 
     private Texture turtleTexture;
@@ -30,20 +30,20 @@ public class StarfishCollectorGame extends Game {
 
         batch = new SpriteBatch();
 
-        turtleTexture = new Texture( Gdx.files.internal("TurtleGame/TurtleTexture.png") );
+        turtleTexture = new Texture( Gdx.files.internal("TurtleGame/Selfmade Textures/TurtleTexture.png") );
         turtleX = 20;
         turtleY = 20;
         turtleRectangle = new Rectangle( turtleX, turtleY,
                 turtleTexture.getWidth(), turtleTexture.getHeight() );
 
-        starfishTexture = new Texture( Gdx.files.internal("TurtleGame/StarfishTexture.png") );
+        starfishTexture = new Texture( Gdx.files.internal("TurtleGame/Selfmade Textures/StarfishTexture.png") );
         starfishX = 380;
         starfishY = 380;
         starfishRectangle = new Rectangle( starfishX, starfishY,
                 starfishTexture.getWidth(), starfishTexture.getHeight() );
 
-        oceanTexture = new Texture( Gdx.files.internal("TurtleGame/OceanTexture.jpg") );
-        winMessageTexture = new Texture( Gdx.files.internal("TurtleGame/WinTexture.png") );
+        oceanTexture = new Texture( Gdx.files.internal("TurtleGame/Selfmade Textures/OceanTexture.png") );
+        winMessageTexture = new Texture( Gdx.files.internal("TurtleGame/Selfmade Textures/WinTexture.png") );
 
         win = false;
     }

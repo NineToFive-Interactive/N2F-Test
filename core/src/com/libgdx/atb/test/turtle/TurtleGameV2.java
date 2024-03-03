@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.libgdx.atb.test.GraphicActor;
 import com.libgdx.atb.test.StagedGame;
 
-public class StarfishCollectorGameV2 extends StagedGame {
+public class TurtleGameV2 extends StagedGame {
 
     private Turtle turtle;
     private GraphicActor starfish;
@@ -17,7 +17,7 @@ public class StarfishCollectorGameV2 extends StagedGame {
     @Override
     public void initialize() {
         ocean = new GraphicActor();
-        ocean.setTexture( new Texture( Gdx.files.internal("TurtleGame/Selfmade Textures/OceanTexture.jpg") ) );
+        ocean.setTexture( new Texture( Gdx.files.internal("TurtleGame/Selfmade Textures/OceanTexture.png") ) );
         mainStage.addActor(ocean);
 
         starfish = new GraphicActor();
@@ -25,8 +25,7 @@ public class StarfishCollectorGameV2 extends StagedGame {
         starfish.setPosition( 380,380 );
         mainStage.addActor( starfish );
 
-        turtle = new Turtle();
-        turtle.setTexture( new Texture(Gdx.files.internal("TurtleGame/Selfmade Textures//TurtleTexture.png")) );
+        turtle = new Turtle(20, 20, mainStage);
         turtle.setPosition( 20,20 );
         mainStage.addActor( turtle );
 
@@ -40,10 +39,6 @@ public class StarfishCollectorGameV2 extends StagedGame {
 
     @Override
     public void update(float delta) {
-        if (turtle.overlaps(starfish))
-        {
-            starfish.remove();
-            winMessage.setVisible(true);
-        }
+
     }
 }

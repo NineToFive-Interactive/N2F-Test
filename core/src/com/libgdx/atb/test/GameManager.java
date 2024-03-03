@@ -2,11 +2,11 @@ package com.libgdx.atb.test;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.libgdx.atb.test.turtle.StarfishCollectorGameV2;
+import com.libgdx.atb.test.turtle.TurtleGameV2;
 
 public class GameManager extends ApplicationAdapter {
 
-	Game activeGame = new StarfishCollectorGameV2();
+	Game activeGame = new TurtleGameV2();
 
 	@Override
 	public void create () {

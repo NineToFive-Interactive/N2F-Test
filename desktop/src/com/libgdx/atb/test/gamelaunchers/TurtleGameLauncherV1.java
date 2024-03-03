@@ -1,9 +1,8 @@
 package com.libgdx.atb.test.gamelaunchers;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.libgdx.atb.test.gamelaunchers.BaseLauncher;
 
-public class TurtleGameLauncher extends BaseLauncher {
+public class TurtleGameLauncherV1 extends BaseLauncher {
     @Override
     public Lwjgl3ApplicationConfiguration setConfig() {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();

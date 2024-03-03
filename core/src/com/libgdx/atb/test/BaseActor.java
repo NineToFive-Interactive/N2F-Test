@@ -1,5 +1,6 @@
 package com.libgdx.atb.test;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Gdx;
@@ -16,6 +17,12 @@ public class BaseActor extends Actor {
     private Animation<TextureRegion> animation;
     private float elapsedTime;
     private boolean animationPaused;
+    private Vector2 velocityVector;
+    private Vector2 accelerationVector;
+    private float acceleration;
+    private float maxSpeed;
+    private float deceleration;
+
 
     public BaseActor(float posX, float posY, Stage stage){
         super();
@@ -24,6 +31,11 @@ public class BaseActor extends Actor {
         animation = null;
         elapsedTime = 0;
         animationPaused = false;
+        velocityVector = new Vector2(0,0);
+        accelerationVector = new Vector2(0,0);
+        acceleration = 0;
+        maxSpeed = 1000;
+        deceleration = 0;
     }
 
     public void setAnimation(Animation<TextureRegion> animation) {
@@ -77,5 +89,74 @@ public class BaseActor extends Actor {
         if(this.animation == null) setAnimation(animation);
 
         return animation;
+    }
+
+    public Animation<TextureRegion> loadAnimationFromSheet(String fileName, int rows, int cols, float frameDuration, boolean loop) {
+        Texture texture = new Texture(Gdx.files.internal(fileName), true);
+        texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+        int frameWidth = texture.getWidth() / cols;
+        int frameHeight = texture.getHeight() / rows;
+
+        TextureRegion[][] temp = TextureRegion.split(texture, frameWidth, frameHeight);
+        Array<TextureRegion> textureArray = new Array<TextureRegion>();
+
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                textureArray.add( temp[i][j] );
+
+        Animation<TextureRegion> animation = new Animation<TextureRegion>(frameDuration, textureArray);
+
+        if (loop) animation.setPlayMode(Animation.PlayMode.LOOP);
+        else animation.setPlayMode(Animation.PlayMode.NORMAL);
+
+        if (this.animation == null) setAnimation(animation);
+
+        return animation;
+    }
+
+    public Animation<TextureRegion> loadTexture(String fileName) {
+        String[] fileNames = new String[1];
+        fileNames[0] = fileName;
+        return loadAnimationFromFiles(fileNames, 1, true);
+    }
+
+    public boolean isAnimationFinished()
+    {
+        return animation.isAnimationFinished(elapsedTime);
+    }
+
+    public void setSpeed(float speed) {
+        if (velocityVector.len() == 0)
+            velocityVector.set(speed, 0);
+        else
+            velocityVector.setLength(speed);
+    }
+    public float getSpeed() {
+        return velocityVector.len();
+    }
+    public void setMotionAngle(float angle) {
+        velocityVector.setAngle(angle);
+    }
+    public float getMotionAngle() {
+        return velocityVector.angle();
+    }
+    public boolean isMoving() {
+        return (getSpeed() > 0);
+    }
+    public void setAcceleration(float acceleration) {
+        this.acceleration = acceleration;
+    }
+    public void accelerateAtAngle(float angle) {
+        accelerationVector.add( new Vector2(acceleration, 0).setAngle(angle) );
+    }
+    public void accelerateForward() {
+        accelerateAtAngle( getRotation() );
+    }
+    public void setMaxSpeed(float ms) {
+        maxSpeed = ms;
+    }
+    public void setDeceleration(float dec) {
+        deceleration = dec;
     }
 }
