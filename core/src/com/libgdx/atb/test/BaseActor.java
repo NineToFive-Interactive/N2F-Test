@@ -1,6 +1,9 @@
 package com.libgdx.atb.test;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Gdx;
@@ -12,8 +15,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Intersector.MinimumTranslationVector;
+import com.badlogic.gdx.scenes.scene2d.Group;
 
-public class BaseActor extends Actor {
+import java.util.ArrayList;
+
+public class BaseActor extends Group {
     private Animation<TextureRegion> animation;
     private float elapsedTime;
     private boolean animationPaused;
@@ -22,6 +32,8 @@ public class BaseActor extends Actor {
     private float acceleration;
     private float maxSpeed;
     private float deceleration;
+    private Polygon boundaryPolygon;
+    private static Rectangle worldBounds;
 
 
     public BaseActor(float posX, float posY, Stage stage){
@@ -40,11 +52,16 @@ public class BaseActor extends Actor {
 
     public void setAnimation(Animation<TextureRegion> animation) {
         this.animation = animation;
+
         TextureRegion textureRegion = this.animation.getKeyFrame(0);
+
         float width = textureRegion.getRegionWidth();
         float height = textureRegion.getRegionHeight();
+
         setSize( width, height );
         setOrigin( width/2, height/2 );
+
+        if (boundaryPolygon == null) setBoundaryRectangle();
     }
 
     public void setAnimationPaused(boolean pause) {
@@ -60,8 +77,6 @@ public class BaseActor extends Actor {
 
     public void draw(Batch batch, float parentAlpha)
     {
-        super.draw( batch, parentAlpha );
-
         Color c = getColor();
         batch.setColor(c.r, c.g, c.b, c.a);
 
@@ -69,6 +84,8 @@ public class BaseActor extends Actor {
             batch.draw( animation.getKeyFrame(elapsedTime),
                     getX(), getY(), getOriginX(), getOriginY(),
                     getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation() );
+
+        super.draw( batch, parentAlpha );
     }
 
     public Animation<TextureRegion> loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop) {
@@ -78,6 +95,7 @@ public class BaseActor extends Actor {
         for (String fileName : fileNames) {
             Texture texture = new Texture(Gdx.files.internal(fileName));
             texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
             textureArray.add(new TextureRegion(texture));
         }
 
@@ -156,7 +174,172 @@ public class BaseActor extends Actor {
     public void setMaxSpeed(float ms) {
         maxSpeed = ms;
     }
+
     public void setDeceleration(float dec) {
         deceleration = dec;
+    }
+    public void applyPhysics(float deltaTime) {
+        // apply acceleration
+        velocityVector.add( accelerationVector.x * deltaTime, accelerationVector.y * deltaTime );
+        float speed = getSpeed();
+
+        // decrease speed (decelerate) when not accelerating
+        if (accelerationVector.len() == 0) speed -= deceleration * deltaTime;
+
+        // keep speed within set bounds
+        speed = MathUtils.clamp(speed, 0, maxSpeed);
+
+        // update velocity
+        setSpeed(speed);
+
+        // apply velocity
+        moveBy( velocityVector.x * deltaTime, velocityVector.y * deltaTime );
+
+        // reset acceleration
+        accelerationVector.set(0,0);
+    }
+
+    public void setBoundaryRectangle() {
+        float w = getWidth();
+        float h = getHeight();
+        float[] vertices = {0,0, w,0, w,h, 0,h};
+        boundaryPolygon = new Polygon(vertices);
+    }
+
+    public void setBoundaryPolygon(int numSides) {
+        float w = getWidth();
+        float h = getHeight();
+        float[] vertices = new float[2*numSides];
+
+        for (int i = 0; i < numSides; i++) {
+            float angle = i * 6.28f / numSides;
+
+            // x-coordinate
+            vertices[2*i] = w/2 * MathUtils.cos(angle) + w/2;
+
+            // y-coordinate
+            vertices[2*i+1] = h/2 * MathUtils.sin(angle) + h/2;
+        }
+        boundaryPolygon = new Polygon(vertices);
+    }
+
+    public Polygon getBoundaryPolygon() {
+        boundaryPolygon.setPosition( getX(), getY() );
+        boundaryPolygon.setOrigin( getOriginX(), getOriginY() );
+        boundaryPolygon.setRotation ( getRotation() );
+        boundaryPolygon.setScale( getScaleX(), getScaleY() );
+
+        return boundaryPolygon;
+    }
+
+    public boolean overlaps(BaseActor other) {
+        Polygon poly1 = this.getBoundaryPolygon();
+        Polygon poly2 = other.getBoundaryPolygon();
+
+        // initial test to improve performance
+        if ( !poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle()) ) return false;
+
+        return Intersector.overlapConvexPolygons( poly1, poly2 );
+    }
+
+    public void centerAtPosition(float x, float y) {
+        setPosition( x - getWidth()/2 , y - getHeight()/2 );
+    }
+
+    public void centerAtActor(BaseActor other) {
+        centerAtPosition( other.getX() + other.getWidth()/2 , other.getY() + other.getHeight()/2 );
+    }
+
+    public void setOpacity(float opacity) {
+        this.getColor().a = opacity;
+    }
+
+    public Vector2 preventOverlap(BaseActor other) {
+        Polygon poly1 = this.getBoundaryPolygon();
+        Polygon poly2 = other.getBoundaryPolygon();
+
+        // initial test to improve performance
+        if ( !poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle()) ) return null;
+
+        MinimumTranslationVector mtv = new MinimumTranslationVector();
+
+        boolean polygonOverlap = Intersector.overlapConvexPolygons(poly1, poly2, mtv);
+
+        if ( !polygonOverlap ) return null;
+
+        this.moveBy( mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth );
+
+        return mtv.normal;
+    }
+
+    public static <T> ArrayList<T> getList(Stage stage, Class<T> type) {
+        ArrayList<T> list = new ArrayList<T>();
+        for (Actor a : stage.getActors()) {
+            if (type.isInstance(a))
+                list.add((T) a);
+        }
+        return list;
+    }
+
+    public static <T> int count(Stage stage, Class<T> type) {
+        return getList(stage, type).size();
+    }
+
+    public static void setWorldBounds(float width, float height) {
+        worldBounds = new Rectangle(0,0,width,height);
+    }
+
+    public static void setWorldBounds(BaseActor baseActor) {
+        setWorldBounds(baseActor.getWidth(), baseActor.getHeight());
+    }
+
+    public void boundToWorld()
+    {
+        // check left edge
+        if (getX() < 0)
+            setX(0);
+
+        // check right edge
+        if (getX() + getWidth() > worldBounds.width)
+            setX(worldBounds.width - getWidth());
+
+        // check bottom edge
+        if (getY() < 0)
+            setY(0);
+
+        // check top edge
+        if (getY() + getHeight() > worldBounds.height)
+            setY(worldBounds.height - getHeight());
+    }
+
+    public void alignCamera()
+    {
+        Camera camera = this.getStage().getCamera();
+        Viewport viewport = this.getStage().getViewport();
+
+        // center camera on actor
+        camera.position.set( this.getX() + this.getOriginX(), this.getY() + this.getOriginY(), 0 );
+
+        // bound camera to layout
+        camera.position.x = MathUtils.clamp(camera.position.x,
+                camera.viewportWidth/2, worldBounds.width - camera.viewportWidth/2);
+        camera.position.y = MathUtils.clamp(camera.position.y,
+                camera.viewportHeight/2, worldBounds.height - camera.viewportHeight/2);
+
+        camera.update();
+    }
+
+    public void wrapAroundWorld() {
+        if (getX() + getWidth() < 0)
+            setX( worldBounds.width );
+
+        if (getX() > worldBounds.width)
+            setX( -getWidth());
+
+        if (getY() + getHeight() < 0)
+            setY( worldBounds.height );
+
+        if (getY() > worldBounds.height)
+            setY( -getHeight() );
     }
 }

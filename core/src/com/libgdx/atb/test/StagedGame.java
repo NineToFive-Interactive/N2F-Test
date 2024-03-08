@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class StagedGame extends Game {
     protected Stage mainStage;
+    protected Stage uiStage;
 
     public abstract void initialize();
     public abstract void update(float delta);
@@ -14,6 +15,7 @@ public abstract class StagedGame extends Game {
     @Override
     public void create() {
         mainStage = new Stage();
+        uiStage = new Stage();
         initialize();
     }
 
@@ -21,11 +23,14 @@ public abstract class StagedGame extends Game {
         float delta = Gdx.graphics.getDeltaTime();
 
         mainStage.act(delta);
+        uiStage.act(delta);
+
         update(delta);
 
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         mainStage.draw();
+        uiStage.draw();
     }
 }

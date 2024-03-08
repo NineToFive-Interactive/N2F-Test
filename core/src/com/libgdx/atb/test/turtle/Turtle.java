@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.libgdx.atb.test.BaseActor;
 import com.libgdx.atb.test.GraphicActor;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 
 public class Turtle extends BaseActor {
 
@@ -21,22 +23,38 @@ public class Turtle extends BaseActor {
                  "TurtleGame/Selfmade Textures/TurtleSwimming7.png" };
 
         loadAnimationFromFiles(filenames, 0.1f, true);
+
+        setBoundaryPolygon(8);
+
+        setAcceleration(200);
+        setMaxSpeed(200);
+        setDeceleration(200);
     }
 
-    public void act(float delta) {
-        super.act(delta);
+    public void act(float deltaTime) {
+        super.act(deltaTime);
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-            this.moveBy(-1,0);
+            accelerateAtAngle(180);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-            this.moveBy(1,0);
+            accelerateAtAngle(0);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
-            this.moveBy(0,1);
+            accelerateAtAngle(90);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
-            this.moveBy(0,-1);
+            accelerateAtAngle(270);
         }
+
+        applyPhysics(deltaTime);
+
+        setAnimationPaused( !isMoving() );
+
+        if ( getSpeed() > 0 )
+            setRotation( getMotionAngle() );
+
+        boundToWorld();
+        alignCamera();
     }
 }

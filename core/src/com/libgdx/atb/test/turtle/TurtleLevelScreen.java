@@ -1,14 +1,19 @@
 package com.libgdx.atb.test.turtle;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.compression.lzma.Base;
 import com.libgdx.atb.test.BaseActor;
-import com.libgdx.atb.test.StagedGame;
+import com.libgdx.atb.test.BaseScreen;
 
-public class TurtleGameV3 extends StagedGame {
+public class TurtleLevelScreen extends BaseScreen {
+
     private Turtle turtle;
     private boolean win;
 
+    public TurtleLevelScreen() {
+        super();
+    }
+
+    @Override
     public void initialize() {
         BaseActor ocean = new BaseActor(0,0, mainStage);
         ocean.loadTexture( "TurtleGame/V2/water-border.jpg" );
@@ -30,6 +35,7 @@ public class TurtleGameV3 extends StagedGame {
         win = false;
     }
 
+    @Override
     public void update(float deltaTime) {
         for (BaseActor rockActor : BaseActor.getList(mainStage, Rock.class)) {
             turtle.preventOverlap(rockActor);
