@@ -2,12 +2,25 @@ package com.libgdx.atb.test.turtle;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.libgdx.atb.test.BaseActor;
+import com.libgdx.atb.test.BaseGame;
 import com.libgdx.atb.test.BaseScreen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 
 public class TurtleLevelScreen extends BaseScreen {
 
     private Turtle turtle;
     private boolean win;
+    private Label starfishLabel;
 
     public TurtleLevelScreen() {
         super();
@@ -33,6 +46,11 @@ public class TurtleLevelScreen extends BaseScreen {
         turtle = new Turtle(20,20, mainStage);
 
         win = false;
+
+        starfishLabel = new Label("Starfish Left:", BaseGame.labelStyle);
+        starfishLabel.setColor( Color.CYAN );
+        starfishLabel.setPosition( 20, 520 );
+        uiStage.addActor(starfishLabel);
     }
 
     @Override
@@ -65,5 +83,7 @@ public class TurtleLevelScreen extends BaseScreen {
             youWinMessage.addAction( Actions.delay(0) );
             youWinMessage.addAction( Actions.after( Actions.fadeIn(1) ) );
         }
+
+        starfishLabel.setText("Starfish Left: " + BaseActor.count(mainStage, Starfish.class));
     }
 }
