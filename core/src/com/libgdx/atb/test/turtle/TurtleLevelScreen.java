@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
+import com.libgdx.atb.test.DialogBox;
 import com.libgdx.atb.test.spacerocks.LevelScreen;
 
 public class TurtleLevelScreen extends BaseScreen {
@@ -22,6 +23,7 @@ public class TurtleLevelScreen extends BaseScreen {
     private Turtle turtle;
     private boolean win;
     private Label starfishLabel;
+    private DialogBox dialogBox;
 
     public TurtleLevelScreen() {
         super();
@@ -50,19 +52,13 @@ public class TurtleLevelScreen extends BaseScreen {
 
         starfishLabel = new Label("Starfish Left:", BaseGame.labelStyle);
         starfishLabel.setColor( Color.CYAN );
-        starfishLabel.setPosition( 20, 520 );
-        uiStage.addActor(starfishLabel);
 
         ButtonStyle buttonStyle = new ButtonStyle();
-
         Texture buttonTexture = new Texture( Gdx.files.internal("TurtleGame/V5/undo.png") );
         TextureRegion buttonRegion = new TextureRegion(buttonTexture);
         buttonStyle.up = new TextureRegionDrawable( buttonRegion );
-
         Button restartButton = new Button( buttonStyle );
         restartButton.setColor( Color.CYAN );
-        restartButton.setPosition(720,520);
-        uiStage.addActor(restartButton);
 
         restartButton.addListener(
                 (Event e) -> {
@@ -73,6 +69,27 @@ public class TurtleLevelScreen extends BaseScreen {
                     return false;
                 }
         );
+
+        Sign sign1 = new Sign(20,400, mainStage);
+        sign1.setText("West Starfish Bay");
+
+        Sign sign2 = new Sign(600,300, mainStage);
+        sign2.setText("East Starfish Bay");
+
+        dialogBox = new DialogBox(0,0, uiStage);
+        dialogBox.setBackgroundColor( Color.TAN );
+        dialogBox.setFontColor( Color.BROWN );
+        dialogBox.setDialogSize(600, 100);
+        dialogBox.setFontScale(0.80f);
+        dialogBox.alignCenter();
+        dialogBox.setVisible(false);
+
+        uiTable.pad(20);
+        uiTable.add(starfishLabel).top();
+        uiTable.add().expandX().expandY();
+        uiTable.add(restartButton).top();
+        uiTable.row();
+        uiTable.add(dialogBox).colspan(3);
     }
 
     @Override
@@ -107,5 +124,25 @@ public class TurtleLevelScreen extends BaseScreen {
         }
 
         starfishLabel.setText("Starfish Left: " + BaseActor.count(mainStage, Starfish.class));
+
+        for ( BaseActor signActor : BaseActor.getList(mainStage, Sign.class) ) {
+            Sign sign = (Sign) signActor;
+
+            turtle.preventOverlap(sign);
+
+            boolean nearby = turtle.isWithinDistance(4, sign);
+
+            if ( nearby && !sign.isViewing() ) {
+                dialogBox.setText( sign.getText() );
+                dialogBox.setVisible( true );
+                sign.setViewing( true );
+            }
+
+            if (sign.isViewing() && !nearby) {
+                dialogBox.setText( " " );
+                dialogBox.setVisible( false );
+                sign.setViewing( false );
+            }
+        }
     }
 }

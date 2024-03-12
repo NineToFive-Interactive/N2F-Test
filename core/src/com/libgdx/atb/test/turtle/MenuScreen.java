@@ -20,26 +20,23 @@ public class MenuScreen extends BaseScreen {
         BaseActor ocean = new BaseActor(0,0, mainStage);
         ocean.loadTexture("TurtleGame/V2/water.jpg");
         ocean.setSize(800,600);
-
         BaseActor title = new BaseActor(0,0, mainStage);
         title.loadTexture("TurtleGame/V2/starfish-collector.png");
-        title.centerAtPosition(400,360);
+
 
         TextButton startButton = new TextButton( "Start", BaseGame.textButtonStyle );
-        startButton.setPosition(150,150);
         uiStage.addActor(startButton);
         startButton.addListener(
                 (Event e) -> {
                     if ( !(e instanceof InputEvent) ||
                             !((InputEvent)e).getType().equals(Type.touchDown) )
                         return false;
-                    TurtleGameV5.setActiveScreen( new TurtleLevelScreen() );
+                    TurtleGameV5.setActiveScreen( new StoryScreen() );
                     return false;
                 }
         );
 
         TextButton quitButton = new TextButton( "Quit", BaseGame.textButtonStyle );
-        quitButton.setPosition(500,150);
         uiStage.addActor(quitButton);
         quitButton.addListener(
                 (Event e) -> {
@@ -50,20 +47,23 @@ public class MenuScreen extends BaseScreen {
                     return false;
                 }
         );
+
+        uiTable.add(title).colspan(2);
+        uiTable.row();
+        uiTable.add(startButton);
+        uiTable.add(quitButton);
     }
 
     @Override
-    public void update(float deltaTime) {
-        if (Gdx.input.isKeyPressed(Input.Keys.S))
-            TurtleGameV5.setActiveScreen( new TurtleLevelScreen() );
-    }
+    public void update(float deltaTime) {}
 
-    public boolean keyDown(int keyCode)
-    {
+    public boolean keyDown(int keyCode) {
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER))
-            TurtleGameV5.setActiveScreen( new TurtleLevelScreen() );
+            TurtleGameV5.setActiveScreen( new StoryScreen() );
+
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
             Gdx.app.exit();
+
         return false;
     }
 }
