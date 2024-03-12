@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
+import com.libgdx.atb.test.spacerocks.LevelScreen;
 
 public class TurtleLevelScreen extends BaseScreen {
 
@@ -29,7 +30,7 @@ public class TurtleLevelScreen extends BaseScreen {
     @Override
     public void initialize() {
         BaseActor ocean = new BaseActor(0,0, mainStage);
-        ocean.loadTexture( "TurtleGame/V2/water-border.jpg" );
+        ocean.loadTexture( "TurtleGame/V5/water-border.jpg" );
         ocean.setSize(1024,1024);
         BaseActor.setWorldBounds(ocean);
 
@@ -51,6 +52,27 @@ public class TurtleLevelScreen extends BaseScreen {
         starfishLabel.setColor( Color.CYAN );
         starfishLabel.setPosition( 20, 520 );
         uiStage.addActor(starfishLabel);
+
+        ButtonStyle buttonStyle = new ButtonStyle();
+
+        Texture buttonTexture = new Texture( Gdx.files.internal("TurtleGame/V5/undo.png") );
+        TextureRegion buttonRegion = new TextureRegion(buttonTexture);
+        buttonStyle.up = new TextureRegionDrawable( buttonRegion );
+
+        Button restartButton = new Button( buttonStyle );
+        restartButton.setColor( Color.CYAN );
+        restartButton.setPosition(720,520);
+        uiStage.addActor(restartButton);
+
+        restartButton.addListener(
+                (Event e) -> {
+                    if ( !(e instanceof InputEvent) ||
+                            !((InputEvent)e).getType().equals(Type.touchDown) )
+                        return false;
+                    TurtleGameV5.setActiveScreen( new TurtleLevelScreen() );
+                    return false;
+                }
+        );
     }
 
     @Override
@@ -76,9 +98,9 @@ public class TurtleLevelScreen extends BaseScreen {
         if ( BaseActor.count(mainStage, Starfish.class) == 0 && !win ) {
             win = true;
             BaseActor youWinMessage = new BaseActor(0,0,uiStage);
-            youWinMessage.loadTexture("TurtleGame/Selfmade Textures/WinTexture.png");
-            youWinMessage.setSize(512,512);
-            youWinMessage.centerAtPosition(256,256);
+            youWinMessage.loadTexture("TurtleGame/V5/you-win.png");
+            // youWinMessage.setSize(800,600);
+            youWinMessage.centerAtPosition(400,300);
             youWinMessage.setOpacity(0);
             youWinMessage.addAction( Actions.delay(0) );
             youWinMessage.addAction( Actions.after( Actions.fadeIn(1) ) );
