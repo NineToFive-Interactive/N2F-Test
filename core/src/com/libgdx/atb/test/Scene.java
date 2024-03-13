@@ -1,6 +1,7 @@
-package com.libgdx.atb.test.turtle;
+package com.libgdx.atb.test;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
 import java.util.ArrayList;
 
 public class Scene extends Actor {

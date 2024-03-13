@@ -1,4 +1,4 @@
-package com.libgdx.atb.test.turtle;
+package com.libgdx.atb.test;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Action;

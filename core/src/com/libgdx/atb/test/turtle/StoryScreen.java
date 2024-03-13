@@ -1,9 +1,7 @@
 package com.libgdx.atb.test.turtle;
 
 import com.libgdx.atb.test.*;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.graphics.Color;
 
@@ -71,7 +69,7 @@ public class StoryScreen extends BaseScreen {
     @Override
     public void update(float deltaTime) {
         if ( scene.isSceneFinished() )
-            BaseGame.setActiveScreen( new TurtleLevelScreen() );
+            BaseGame.setActiveScreen( new TurtleLevelScreen(1) );
     }
 
     public boolean keyDown(int keyCode) {

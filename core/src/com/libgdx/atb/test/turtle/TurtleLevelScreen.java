@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.libgdx.atb.test.DialogBox;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.libgdx.atb.test.spacerocks.LevelScreen;
 
 public class TurtleLevelScreen extends BaseScreen {
@@ -24,9 +26,14 @@ public class TurtleLevelScreen extends BaseScreen {
     private boolean win;
     private Label starfishLabel;
     private DialogBox dialogBox;
+    private float audioVolume;
+    private Sound waterDrop;
+    private Music instrumental;
+    private Music oceanSurf;
 
-    public TurtleLevelScreen() {
+    public TurtleLevelScreen(float audioVolume) {
         super();
+        this.audioVolume = audioVolume;
     }
 
     @Override
@@ -62,11 +69,38 @@ public class TurtleLevelScreen extends BaseScreen {
 
         restartButton.addListener(
                 (Event e) -> {
-                    if ( !(e instanceof InputEvent) ||
-                            !((InputEvent)e).getType().equals(Type.touchDown) )
+                    if ( !isTouchDownEvent(e) )
                         return false;
-                    TurtleGameV5.setActiveScreen( new TurtleLevelScreen() );
-                    return false;
+
+                    instrumental.dispose();
+                    oceanSurf.dispose();
+
+                    TurtleGameV6.setActiveScreen( new TurtleLevelScreen(audioVolume) );
+
+                    return true;
+                }
+        );
+
+        ButtonStyle buttonStyle2 = new ButtonStyle();
+
+        Texture buttonTex2 = new Texture( Gdx.files.internal("TurtleGame/V4/audio.png") );
+        TextureRegion buttonRegion2 = new TextureRegion(buttonTex2);
+        buttonStyle2.up = new TextureRegionDrawable( buttonRegion2 );
+
+        Button muteButton = new Button( buttonStyle2 );
+        muteButton.setColor( Color.CYAN );
+
+        muteButton.addListener(
+                (Event e) -> {
+                    if ( !isTouchDownEvent(e) )
+                        return false;
+
+                    audioVolume = 1 - audioVolume;
+
+                    instrumental.setVolume( audioVolume );
+                    oceanSurf.setVolume( audioVolume );
+
+                    return true;
                 }
         );
 
@@ -87,9 +121,22 @@ public class TurtleLevelScreen extends BaseScreen {
         uiTable.pad(20);
         uiTable.add(starfishLabel).top();
         uiTable.add().expandX().expandY();
+        uiTable.add(muteButton).top();
         uiTable.add(restartButton).top();
         uiTable.row();
-        uiTable.add(dialogBox).colspan(3);
+        uiTable.add(dialogBox).colspan(4);
+
+        waterDrop = Gdx.audio.newSound(Gdx.files.internal("TurtleGame/V4/Water_Drop.ogg"));
+        instrumental = Gdx.audio.newMusic(Gdx.files.internal("TurtleGame/V4/Master_of_the_Feast.ogg"));
+        oceanSurf = Gdx.audio.newMusic(Gdx.files.internal("TurtleGame/V4/Ocean_Waves.ogg"));
+
+        instrumental.setLooping(true);
+        instrumental.setVolume(audioVolume);
+        instrumental.play();
+
+        oceanSurf.setLooping(true);
+        oceanSurf.setVolume(audioVolume);
+        oceanSurf.play();
     }
 
     @Override
@@ -101,6 +148,7 @@ public class TurtleLevelScreen extends BaseScreen {
         for (Starfish starfishActor : BaseActor.getList(mainStage, Starfish.class)) {
             if ( turtle.overlaps(starfishActor) && !starfishActor.collected ) {
                 starfishActor.collected = true;
+                waterDrop.play(audioVolume);
 
                 starfishActor.clearActions();
                 starfishActor.addAction( Actions.fadeOut(1) );
