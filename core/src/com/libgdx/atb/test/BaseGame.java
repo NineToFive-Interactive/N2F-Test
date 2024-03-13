@@ -30,10 +30,10 @@ public abstract class BaseGame extends Game {
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         FreeTypeFontGenerator fontGenerator =
-                new FreeTypeFontGenerator(Gdx.files.internal("TurtleGame/V4/OpenSans.ttf"));
+                new FreeTypeFontGenerator(Gdx.files.internal("RythmTapper/V1/Kirsty.ttf"));
 
         FreeTypeFontParameter fontParameters = new FreeTypeFontParameter();
-        fontParameters.size = 48;
+        fontParameters.size = 32;
         fontParameters.color = Color.WHITE;
         fontParameters.borderWidth = 2;
         fontParameters.borderColor = Color.BLACK;
