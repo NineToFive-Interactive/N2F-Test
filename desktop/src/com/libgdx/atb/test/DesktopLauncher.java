@@ -9,17 +9,14 @@ import com.libgdx.atb.test.gamelaunchers.*;
 import com.libgdx.atb.test.homework.HomeworkGame;
 import com.libgdx.atb.test.puzzle.PuzzleGame;
 import com.libgdx.atb.test.spacerocks.SpaceGame;
-import com.libgdx.atb.test.turtle.TurtleGameV3;
-import com.libgdx.atb.test.turtle.TurtleGameV4;
-import com.libgdx.atb.test.turtle.TurtleGameV5;
-import com.libgdx.atb.test.turtle.TurtleGameV6;
+import com.libgdx.atb.test.turtle.*;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
 
 	public static void main (String[] args) {
-		Game currentGame = new CardGame();
-		BaseLauncher currentGameLauncher = new CardGameLauncher();
+		Game currentGame = new TurtleGameV7();
+		BaseLauncher currentGameLauncher = new TurtleGameLauncherV7();
 		Lwjgl3Application launcher = new Lwjgl3Application(currentGame, currentGameLauncher.setConfig());
 	}
 }
