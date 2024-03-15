@@ -6,6 +6,7 @@ import com.libgdx.atb.test.breakout.BreakoutGame;
 import com.libgdx.atb.test.dodger.DodgerGame;
 import com.libgdx.atb.test.gamelaunchers.*;
 import com.libgdx.atb.test.homework.HomeworkGame;
+import com.libgdx.atb.test.puzzle.PuzzleGame;
 import com.libgdx.atb.test.spacerocks.SpaceGame;
 import com.libgdx.atb.test.turtle.TurtleGameV3;
 import com.libgdx.atb.test.turtle.TurtleGameV4;
@@ -16,8 +17,8 @@ import com.libgdx.atb.test.turtle.TurtleGameV6;
 public class DesktopLauncher {
 
 	public static void main (String[] args) {
-		Game currentGame = new BreakoutGame();
-		BaseLauncher currentGameLauncher = new BreakoutGameLauncher();
+		Game currentGame = new PuzzleGame();
+		BaseLauncher currentGameLauncher = new PuzzleGameLauncher();
 		Lwjgl3Application launcher = new Lwjgl3Application(currentGame, currentGameLauncher.setConfig());
 	}
 }
