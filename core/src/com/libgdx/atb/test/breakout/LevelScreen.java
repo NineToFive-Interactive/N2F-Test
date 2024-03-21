@@ -3,12 +3,16 @@ package com.libgdx.atb.test.breakout;
 import com.libgdx.atb.test.BaseActor;
 import com.libgdx.atb.test.BaseGame;
 import com.libgdx.atb.test.BaseScreen;
+import com.libgdx.atb.test.TilemapActor;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
 
 public class LevelScreen extends BaseScreen {
 
@@ -28,36 +32,46 @@ public class LevelScreen extends BaseScreen {
     @Override
     public void initialize() {
 
-        BaseActor background = new BaseActor(0,0, mainStage);
-        background.loadTexture("RectangleDestroyer/V1/space.png");
-        BaseActor.setWorldBounds(background);
-        paddle = new Paddle(320, 32, mainStage);
+        TilemapActor tma = new TilemapActor("RectangleDestroyer/V2/map.tmx", mainStage);
 
-        new Wall( 0,0, mainStage,20, 600); // left wall
-        new Wall(780,0, mainStage,20, 600); // right wall
-        new Wall(0,550, mainStage,800, 50); // top wall
-
-        Brick tempBrick = new Brick(0,0,mainStage);
-        float brickWidth = tempBrick.getWidth();
-        float brickHeight = tempBrick.getHeight();
-        tempBrick.remove();
-
-        int totalRows = 10;
-        int totalCols = 10;
-
-        float marginX = (800 - totalCols * brickWidth) / 2;
-        float marginY = (600 - totalRows * brickHeight) - 120;
-
-        for (int rowNum = 0; rowNum < totalRows; rowNum++) {
-
-            for (int colNum = 0; colNum < totalCols; colNum++) {
-
-                float x = marginX + brickWidth * colNum;
-                float y = marginY + brickHeight * rowNum;
-
-                new Brick( x, y, mainStage );
-            }
+        for (MapObject obj : tma.getTileList("Wall") ) {
+            MapProperties props = obj.getProperties();
+            new Wall( (float)props.get("x"), (float)props.get("y"), mainStage,
+                    (float)props.get("width"),(float)props.get("height"));
         }
+
+        for (MapObject obj : tma.getTileList("Brick") ) {
+
+            MapProperties props = obj.getProperties();
+
+            Brick b = new Brick( (float)props.get("x"), (float)props.get("y"), mainStage );
+            b.setSize( (float)props.get("width"), (float)props.get("height") );
+            b.setBoundaryRectangle();
+
+            String colorName = (String)props.get("color");
+
+            if ( colorName.equals("red") )
+                b.setColor(Color.RED);
+            else if ( colorName.equals("orange") )
+                b.setColor(Color.ORANGE);
+            else if ( colorName.equals("yellow") )
+                b.setColor(Color.YELLOW);
+            else if ( colorName.equals("green") )
+                b.setColor(Color.GREEN);
+            else if ( colorName.equals("blue") )
+                b.setColor(Color.BLUE);
+            else if ( colorName.equals("purple") )
+                b.setColor(Color.PURPLE);
+            else if ( colorName.equals("white") )
+                b.setColor(Color.WHITE);
+            else if ( colorName.equals("gray") )
+                b.setColor(Color.GRAY);
+        }
+
+        MapObject startPoint = tma.getRectangleList("Start").get(0);
+        MapProperties props = startPoint.getProperties();
+
+        paddle = new Paddle( (float)props.get("x"), (float)props.get("y"), mainStage);
 
         ball = new Ball(0,0,mainStage);
 

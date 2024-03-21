@@ -28,6 +28,15 @@ public class LevelScreen extends BaseScreen {
         new Rock(200,300, mainStage);
         new Rock(200,500, mainStage);
         new Rock(400,500, mainStage);
+        new Rock(100,200,mainStage);
+        new Rock(100,200,mainStage);
+        new Rock(100,200,mainStage);
+        new Rock(100,200,mainStage);
+        new Rock(100,200,mainStage);
+        new Rock(100,200,mainStage);
+        new Rock(100,200,mainStage);
+
+
     }
 
     @Override

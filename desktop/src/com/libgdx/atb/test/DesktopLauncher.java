@@ -15,8 +15,8 @@ import com.libgdx.atb.test.turtle.*;
 public class DesktopLauncher {
 
 	public static void main (String[] args) {
-		Game currentGame = new TurtleGameV7();
-		BaseLauncher currentGameLauncher = new TurtleGameLauncherV7();
+		Game currentGame = new BreakoutGame();
+		BaseLauncher currentGameLauncher = new BreakoutGameLauncher();
 		Lwjgl3Application launcher = new Lwjgl3Application(currentGame, currentGameLauncher.setConfig());
 	}
 }

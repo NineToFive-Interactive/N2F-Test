@@ -7,7 +7,7 @@ public class BreakoutGameLauncher extends BaseLauncher{
     public Lwjgl3ApplicationConfiguration setConfig() {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Breakout");
-        config.setWindowedMode(800,600);
+        config.setWindowedMode(832,640);
         config.setForegroundFPS(60);
         return config;
     }

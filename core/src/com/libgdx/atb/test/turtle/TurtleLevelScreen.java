@@ -1,9 +1,7 @@
 package com.libgdx.atb.test.turtle;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.libgdx.atb.test.BaseActor;
-import com.libgdx.atb.test.BaseGame;
-import com.libgdx.atb.test.BaseScreen;
+import com.libgdx.atb.test.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -15,10 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
-import com.libgdx.atb.test.DialogBox;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.audio.Music;
-import com.libgdx.atb.test.spacerocks.LevelScreen;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
 
 public class TurtleLevelScreen extends BaseScreen {
 
@@ -38,22 +36,28 @@ public class TurtleLevelScreen extends BaseScreen {
 
     @Override
     public void initialize() {
-        BaseActor ocean = new BaseActor(0,0, mainStage);
-        ocean.loadTexture( "TurtleGame/V5/water-border.jpg" );
-        ocean.setSize(1024,1024);
-        BaseActor.setWorldBounds(ocean);
 
-        new Starfish(300,100, mainStage);
-        new Starfish(250,600, mainStage);
-        new Starfish(800,800, mainStage);
-        new Starfish(450,450, mainStage);
+        TilemapActor tma = new TilemapActor("TurtleGame/V5/map.tmx", mainStage);
 
-        new Rock(150, 600, mainStage);
-        new Rock(350, 300, mainStage);
-        new Rock(550, 700, mainStage);
-        new Rock(700, 300, mainStage);
+        for (MapObject obj : tma.getTileList("Starfish") ) {
+            MapProperties props = obj.getProperties();
+            new Starfish( (float)props.get("x"), (float)props.get("y"), mainStage );
+        }
 
-        turtle = new Turtle(20,20, mainStage);
+        for (MapObject obj : tma.getTileList("Rock") ) {
+            MapProperties props = obj.getProperties();
+            new Rock( (float)props.get("x"), (float)props.get("y"), mainStage );
+        }
+
+        for (MapObject obj : tma.getTileList("Sign") ) {
+            MapProperties props = obj.getProperties();
+            Sign s = new Sign( (float)props.get("x"), (float)props.get("y"), mainStage );
+            s.setText( (String)props.get("message") );
+        }
+
+        MapObject startPoint = tma.getRectangleList("Start").get(0);
+        MapProperties props = startPoint.getProperties();
+        turtle = new Turtle( (float)props.get("x"), (float)props.get("y"), mainStage);
 
         win = false;
 
@@ -103,12 +107,6 @@ public class TurtleLevelScreen extends BaseScreen {
                     return true;
                 }
         );
-
-        Sign sign1 = new Sign(20,400, mainStage);
-        sign1.setText("West Starfish Bay");
-
-        Sign sign2 = new Sign(600,300, mainStage);
-        sign2.setText("East Starfish Bay");
 
         dialogBox = new DialogBox(0,0, uiStage);
         dialogBox.setBackgroundColor( Color.TAN );

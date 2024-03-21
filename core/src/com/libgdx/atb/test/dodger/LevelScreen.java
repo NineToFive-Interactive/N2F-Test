@@ -55,6 +55,7 @@ public class LevelScreen extends BaseScreen {
         gameOver = false;
         gameOverMessage = new BaseActor(0,0,uiStage);
         gameOverMessage.loadTexture("PlaneDodger/V1/game-over.png");
+        gameOverMessage.centerAtPosition(400,300);
         gameOverMessage.setVisible(false);
 
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("PlaneDodger/V1/Prelude-and-Action.mp3"));
@@ -102,6 +103,7 @@ public class LevelScreen extends BaseScreen {
                 sparkleSound.play();
 
                 star.remove();
+
                 score++;
                 scoreLabel.setText( Integer.toString(score) );
             }
