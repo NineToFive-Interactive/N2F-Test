@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="6">
+ <tileset firstgid="1" name="Tilemap-v2" tilewidth="16" tileheight="16" tilecount="126" columns="7">
+  <image source="../Tilemap-v2.png" width="112" height="288"/>
+ </tileset>
+ <layer id="1" name="Kachelebene 1" width="20" height="20">
+  <data encoding="csv">
+1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,
+15,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,17
+</data>
+ </layer>
+ <objectgroup id="2" name="Objektebene 1">
+  <object id="1" x="0" y="0" width="320" height="16">
+   <properties>
+    <property name="name" value="Solid"/>
+   </properties>
+  </object>
+  <object id="2" x="0" y="304" width="320" height="16">
+   <properties>
+    <property name="name" value="Solid"/>
+   </properties>
+  </object>
+  <object id="3" x="304" y="0" width="16" height="320">
+   <properties>
+    <property name="name" value="Solid"/>
+   </properties>
+  </object>
+  <object id="4" x="0" y="0" width="16" height="320">
+   <properties>
+    <property name="name" value="Solid"/>
+   </properties>
+  </object>
+  <object id="5" x="160" y="160">
+   <properties>
+    <property name="name" value="Start"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
