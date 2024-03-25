@@ -247,7 +247,7 @@ public class StoryScreen extends BaseScreen {
         scene.addSegment( new SceneSegment( theEnd, Actions.fadeIn(4) ));
         scene.addSegment( new SceneSegment( background, Actions.delay(10) ));
         scene.addSegment( new SceneSegment( background, Actions.run(
-                () -> { BaseGame.setActiveScreen(new MenuScreen()); }) ));
+                () -> { BaseGame.setActiveScreen(new HomeworkMenuScreen()); }) ));
 
         scene.start();
     }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.graphics.Color;
 
-public class StoryScreen extends BaseScreen {
+public class TurtleStoryScreen extends BaseScreen {
 
     Scene scene;
     BaseActor continueKey;

@@ -6,6 +6,6 @@ public class CardGame extends BaseGame {
 
     public void create() {
         super.create();
-        setActiveScreen( new LevelScreen() );
+        setActiveScreen( new CardsLevelScreen() );
     }
 }

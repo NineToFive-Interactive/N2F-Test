@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 
-public class MenuScreen extends BaseScreen {
+public class HomeworkMenuScreen extends BaseScreen {
     @Override
     public void initialize() {
         BaseActor background = new BaseActor(0,0, mainStage);

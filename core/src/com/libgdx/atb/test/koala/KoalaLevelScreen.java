@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-public class LevelScreen extends BaseScreen {
+public class KoalaLevelScreen extends BaseScreen {
 
     Koala jack;
     boolean gameOver;

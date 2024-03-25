@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-public class LevelScreen extends BaseScreen {
+public class QuestLevelScreen extends BaseScreen {
 
     Hero hero;
     Sword sword;

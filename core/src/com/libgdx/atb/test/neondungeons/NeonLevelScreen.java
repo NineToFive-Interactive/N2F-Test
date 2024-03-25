@@ -7,7 +7,7 @@ import com.libgdx.atb.test.TilemapActor;
 import com.libgdx.atb.test.quest.Hero;
 import com.libgdx.atb.test.quest.Solid;
 
-public class LevelScreen extends BaseScreen {
+public class NeonLevelScreen extends BaseScreen {
 
     Hero hero;
 

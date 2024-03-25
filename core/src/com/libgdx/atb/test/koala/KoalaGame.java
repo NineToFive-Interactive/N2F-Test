@@ -6,7 +6,7 @@ public class KoalaGame extends BaseGame {
 
     public void create() {
         super.create();
-        setActiveScreen( new LevelScreen() );
+        setActiveScreen( new KoalaLevelScreen() );
     }
 
 }

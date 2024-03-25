@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.graphics.Color;
 
-public class LevelScreen extends BaseScreen {
+public class PuzzleLevelScreen extends BaseScreen {
 
     private Label messageLabel;
 

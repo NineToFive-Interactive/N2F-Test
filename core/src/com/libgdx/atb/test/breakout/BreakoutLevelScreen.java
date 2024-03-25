@@ -14,7 +14,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 
-public class LevelScreen extends BaseScreen {
+public class BreakoutLevelScreen extends BaseScreen {
 
     Paddle paddle;
     Ball ball;

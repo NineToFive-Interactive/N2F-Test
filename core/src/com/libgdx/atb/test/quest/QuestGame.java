@@ -5,7 +5,7 @@ public class QuestGame extends BaseGame {
 
     public void create() {
         super.create();
-        setActiveScreen( new LevelScreen() );
+        setActiveScreen( new QuestLevelScreen() );
     }
 
 }

@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
-import com.libgdx.atb.test.spacerocks.LevelScreen;
 
 public class MenuScreen extends BaseScreen {
     public MenuScreen() {
@@ -31,7 +30,7 @@ public class MenuScreen extends BaseScreen {
                     if ( !(e instanceof InputEvent) ||
                             !((InputEvent)e).getType().equals(Type.touchDown) )
                         return false;
-                    TurtleGameV5.setActiveScreen( new StoryScreen() );
+                    TurtleGameV5.setActiveScreen( new TurtleStoryScreen() );
                     return false;
                 }
         );
@@ -59,7 +58,7 @@ public class MenuScreen extends BaseScreen {
 
     public boolean keyDown(int keyCode) {
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER))
-            TurtleGameV5.setActiveScreen( new StoryScreen() );
+            TurtleGameV5.setActiveScreen( new TurtleStoryScreen() );
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
             Gdx.app.exit();

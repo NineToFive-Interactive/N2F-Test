@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.libgdx.atb.test.BaseActor;
 import com.libgdx.atb.test.BaseScreen;
 
-public class LevelScreen extends BaseScreen {
+public class SpaceLevelScreen extends BaseScreen {
     private Spaceship spaceship;
     private boolean gameOver;
 

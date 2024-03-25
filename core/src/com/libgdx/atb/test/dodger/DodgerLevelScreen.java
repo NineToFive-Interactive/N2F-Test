@@ -10,7 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.audio.Music;
 
-public class LevelScreen extends BaseScreen {
+public class DodgerLevelScreen extends BaseScreen {
     Plane plane;
     float starTimer;
     float starSpawnInterval;

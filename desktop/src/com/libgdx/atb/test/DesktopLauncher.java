@@ -12,8 +12,8 @@ import com.libgdx.atb.test.quest.QuestGame;
 public class DesktopLauncher {
 
 	public static void main (String[] args) {
-		Game currentGame = new DungeonGame();
-		BaseLauncher currentGameLauncher = new DungeonGameLauncher();
+		Game currentGame = new GameHub();
+		BaseLauncher currentGameLauncher = new GameHubLauncher();
 		Lwjgl3Application launcher = new Lwjgl3Application(currentGame, currentGameLauncher.setConfig());
 	}
 }

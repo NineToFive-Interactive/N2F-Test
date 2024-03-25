@@ -5,6 +5,6 @@ import com.libgdx.atb.test.BaseGame;
 public class DungeonGame extends BaseGame {
     public void create() {
         super.create();
-        setActiveScreen( new LevelScreen() );
+        setActiveScreen( new NeonLevelScreen() );
     }
 }
